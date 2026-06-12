@@ -143,14 +143,30 @@ appId:"1:219158643334:web:70d4aa86f5825674038707"
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 register.onclick = async ()=>{
 
 try{
+const userCredential =
 await createUserWithEmailAndPassword(
 auth,
 email.value,
 password.value
+);
+
+await setDoc(
+doc(db,"users",userCredential.user.uid),
+{
+email: email.value,
+accountName: accountName.value,
+playerName: playerName.value,
+coins: 0,
+completedOrders: 0,
+rejectedOrders: 0,
+xpLevel: 1,
+premiumLevel: 1
+}
 );
 
 alert("Konto utworzone!");
