@@ -1,95 +1,192 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>EburEats Firebase Test</title>
+<meta charset="UTF-8">
+<title>EburEats</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#00c853,#00e5ff);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  width:350px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+h1{
+  margin-top:0;
+}
+
+input{
+  width:90%;
+  padding:12px;
+  margin:6px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:95%;
+  padding:14px;
+  margin:6px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.green{
+  background:#00c853;
+  color:white;
+}
+
+.red{
+  background:#ff5252;
+  color:white;
+}
+
+.blue{
+  background:#2962ff;
+  color:white;
+}
+
+.hidden{
+  display:none;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Firebase Test</h1>
+<div class="card">
+
+<div id="loginBox">
+
+<h1>🚴 EburEats</h1>
 
 <input id="email" placeholder="Email">
-<br><br>
 
 <input id="password" type="password" placeholder="Hasło">
-<br><br>
 
-<button id="register">Rejestracja</button>
-<button id="login">Logowanie</button>
+<button class="green" id="register">
+Rejestracja
+</button>
 
-<p id="status">Niezalogowany</p>
+<button class="blue" id="login">
+Logowanie
+</button>
+
+</div>
+
+<div id="userBox" class="hidden">
+
+<h1>🚴 EburEats</h1>
+
+<p id="status"></p>
+
+<button class="green">
+Wejdź do gry
+</button>
+
+<button class="red" id="logout">
+Wyloguj
+</button>
+
+</div>
+
+</div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCa0garyFJS753hYnB3IPubS8U1jv1p5RE",
-  authDomain: "ebureats.firebaseapp.com",
-  projectId: "ebureats",
-  storageBucket: "ebureats.firebasestorage.app",
-  messagingSenderId: "219158643334",
-  appId: "1:219158643334:web:70d4aa86f5825674038707"
+apiKey:"AIzaSyCa0garyFJS753hYnB3IPubS8U1jv1p5RE",
+authDomain:"ebureats.firebaseapp.com",
+projectId:"ebureats",
+storageBucket:"ebureats.firebasestorage.app",
+messagingSenderId:"219158643334",
+appId:"1:219158643334:web:70d4aa86f5825674038707"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-document.getElementById("register").onclick = async () => {
+register.onclick = async ()=>{
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+try{
+await createUserWithEmailAndPassword(
+auth,
+email.value,
+password.value
+);
 
-  try {
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+alert("Konto utworzone!");
+}
+catch(err){
+alert(err.message);
+}
 
-    alert("Konto utworzone!");
-  }
-  catch(err) {
-    alert(err.message);
-  }
 };
 
-document.getElementById("login").onclick = async () => {
+login.onclick = async ()=>{
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+try{
+await signInWithEmailAndPassword(
+auth,
+email.value,
+password.value
+);
 
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+alert("Zalogowano!");
+}
+catch(err){
+alert(err.message);
+}
 
-    alert("Zalogowano!");
-  }
-  catch(err) {
-    alert(err.message);
-  }
 };
 
-onAuthStateChanged(auth, user => {
+logout.onclick = async ()=>{
+await signOut(auth);
+};
 
-  if(user) {
-    document.getElementById("status").innerText =
-      "Zalogowany: " + user.email;
-  }
-  else {
-    document.getElementById("status").innerText =
-      "Niezalogowany";
-  }
+onAuthStateChanged(auth,user=>{
+
+if(user){
+
+loginBox.classList.add("hidden");
+userBox.classList.remove("hidden");
+
+status.innerText =
+"Zalogowany jako: " + user.email;
+
+}else{
+
+loginBox.classList.remove("hidden");
+userBox.classList.add("hidden");
+
+}
 
 });
 
