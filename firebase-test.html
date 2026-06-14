@@ -216,9 +216,13 @@ document.getElementById("status").innerHTML =
 `
 Witaj, ${data.playerName}<br>
 Konto: @${data.accountName}<br>
-Monety: ${data.coins}
+Monety: ${data.coins}<br>
+Ukończone zamówienia: ${data.completedOrders}<br>
+Odrzucone zamówienia: ${data.rejectedOrders}<br>
+Poziom XP: ${data.xpLevel}<br>
+Poziom Premium: ${data.premiumLevel}
 `;
-
+  
 }else{
 
 loginBox.classList.remove("hidden");
