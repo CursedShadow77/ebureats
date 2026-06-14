@@ -103,7 +103,7 @@ Logowanie
 
 <button class="green">Zaczynamy</button>
 
-<button class="blue">Profil</button>
+<button class="blue" id="profileButton">Profil</button>
 
 <button class="blue">Ranking</button>
 
@@ -113,6 +113,18 @@ Logowanie
 Koniec na razie
 </button>
     
+</div>
+
+  <div id="profileScreen" class="hidden">
+
+<h2>👤 Profil</h2>
+
+<p id="profileData"></p>
+
+<button class="red" id="backProfile">
+Powrót
+</button>
+
 </div>
 
 <button class="green" id="playButton">
@@ -263,6 +275,29 @@ document.getElementById("gameMenu")
 .classList.add("hidden");
 
 playButton.style.display = "block";
+
+};
+
+profileButton.onclick = () => {
+
+document.getElementById("profileScreen")
+.classList.remove("hidden");
+
+document.getElementById("profileData").innerHTML =
+status.innerHTML;
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+};
+
+backProfile.onclick = () => {
+
+document.getElementById("profileScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
 
 };
   
