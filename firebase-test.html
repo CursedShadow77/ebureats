@@ -109,8 +109,10 @@ Logowanie
 
 <button class="blue">Sklep</button>
 
-<button class="red">Koniec na razie</button>
-
+<button class="red" id="endButton">
+Koniec na razie
+</button>
+    
 </div>
 
 <button class="green" id="playButton">
@@ -252,6 +254,15 @@ document.getElementById("gameMenu")
 .classList.remove("hidden");
 
 playButton.style.display = "none";
+
+};
+
+endButton.onclick = () => {
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+playButton.style.display = "block";
 
 };
   
