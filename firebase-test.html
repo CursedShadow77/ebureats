@@ -99,6 +99,20 @@ Logowanie
 
 <p id="status"></p>
 
+  <div id="gameMenu" class="hidden">
+
+<button class="green">Zaczynamy</button>
+
+<button class="blue">Profil</button>
+
+<button class="blue">Ranking</button>
+
+<button class="blue">Sklep</button>
+
+<button class="red">Koniec na razie</button>
+
+</div>
+
 <button class="green" id="playButton">
 Wejdź do gry
 </button>
@@ -232,6 +246,15 @@ userBox.classList.add("hidden");
 
 });
 
+playButton.onclick = () => {
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+playButton.style.display = "none";
+
+};
+  
 </script>
 
 </body>
