@@ -125,10 +125,11 @@ onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-  import {
+ import {
 getFirestore,
 doc,
-setDoc
+setDoc,
+getDoc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -198,15 +199,25 @@ logout.onclick = async ()=>{
 await signOut(auth);
 };
 
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(auth, async user => {
 
 if(user){
 
 loginBox.classList.add("hidden");
 userBox.classList.remove("hidden");
 
-document.getElementById("status").innerText =
-"Zalogowany jako: " + user.email;
+const userDoc = await getDoc(
+doc(db,"users",user.uid)
+);
+
+const data = userDoc.data();
+
+document.getElementById("status").innerHTML =
+`
+Witaj, ${data.playerName}<br>
+Konto: @${data.accountName}<br>
+Monety: ${data.coins}
+`;
 
 }else{
 
