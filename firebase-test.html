@@ -313,7 +313,17 @@ document.getElementById("gameMenu")
 
 backProfile.onclick = () => {
 
-  rankingButton.onclick = async () => {
+document.getElementById("profileScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+document.getElementById("status").style.display = "block";
+
+};
+
+rankingButton.onclick = async () => {
 
 document.getElementById("gameMenu")
 .classList.add("hidden");
@@ -348,7 +358,7 @@ html +=
 
 document.getElementById("rankingData")
 .innerHTML = html;
-
+  
 };
 
 backRanking.onclick = () => {
@@ -358,16 +368,6 @@ document.getElementById("rankingScreen")
 
 document.getElementById("gameMenu")
 .classList.remove("hidden");
-
-};
-
-document.getElementById("profileScreen")
-.classList.add("hidden");
-
-document.getElementById("gameMenu")
-.classList.remove("hidden");
-
-document.getElementById("status").style.display = "block";
 
 };
   
