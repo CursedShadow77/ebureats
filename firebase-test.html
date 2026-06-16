@@ -107,7 +107,7 @@ Logowanie
 
 <button class="blue" id="rankingButton">Ranking</button>
 
-<button class="blue">Sklep</button>
+<button class="blue" id="shopButton">Sklep</button>
 
 <button class="red" id="endButton">
 Koniec na razie
@@ -136,6 +136,22 @@ Powrót
 </p>
 
 <button class="red" id="backRanking">
+Powrót
+</button>
+
+</div>
+
+  <div id="shopScreen" class="hidden">
+
+<h2>🛒 Sklep</h2>
+
+<p>
+💎 Premium 2 - 100 monet<br>
+💎 Premium 3 - 250 monet<br>
+🏅 Złota odznaka - 500 monet
+</p>
+
+<button class="red" id="backShop">
 Powrót
 </button>
 
@@ -364,6 +380,24 @@ document.getElementById("rankingData")
 backRanking.onclick = () => {
 
 document.getElementById("rankingScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+  shopButton.onclick = () => {
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+document.getElementById("shopScreen")
+.classList.remove("hidden");
+
+};
+
+backShop.onclick = () => {
+
+document.getElementById("shopScreen")
 .classList.add("hidden");
 
 document.getElementById("gameMenu")
