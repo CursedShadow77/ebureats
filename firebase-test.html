@@ -280,6 +280,21 @@ playButton.style.display = "block";
 
 profileButton.onclick = () => {
 
+document.getElementById("status").style.display = "none";
+
+playButton.style.display = "none";
+
+document.getElementById("profileScreen")
+.classList.remove("hidden");
+
+document.getElementById("profileData").innerHTML =
+document.getElementById("status").innerHTML;
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+};
+
 document.getElementById("profileScreen")
 .classList.remove("hidden");
 
@@ -292,6 +307,16 @@ document.getElementById("gameMenu")
 };
 
 backProfile.onclick = () => {
+
+document.getElementById("profileScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+document.getElementById("status").style.display = "block";
+
+};
 
 document.getElementById("profileScreen")
 .classList.add("hidden");
