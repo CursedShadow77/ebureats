@@ -105,7 +105,7 @@ Logowanie
 
 <button class="blue" id="profileButton">Profil</button>
 
-<button class="blue">Ranking</button>
+<button class="blue" id="rankingButton">Ranking</button>
 
 <button class="blue">Sklep</button>
 
@@ -122,6 +122,20 @@ Koniec na razie
 <p id="profileData"></p>
 
 <button class="red" id="backProfile">
+Powrót
+</button>
+
+</div>
+
+  <div id="rankingScreen" class="hidden">
+
+<h2>🏆 Ranking</h2>
+
+<p id="rankingData">
+Ładowanie...
+</p>
+
+<button class="red" id="backRanking">
 Powrót
 </button>
 
@@ -153,11 +167,13 @@ onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
- import {
+import {
 getFirestore,
 doc,
 setDoc,
-getDoc
+getDoc,
+collection,
+getDocs
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -296,6 +312,54 @@ document.getElementById("gameMenu")
 };
 
 backProfile.onclick = () => {
+
+  rankingButton.onclick = async () => {
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+document.getElementById("rankingScreen")
+.classList.remove("hidden");
+
+const snapshot = await getDocs(
+collection(db,"users")
+);
+
+let ranking = [];
+
+snapshot.forEach(doc => {
+
+ranking.push(doc.data());
+
+});
+
+ranking.sort(
+(a,b) => b.coins - a.coins
+);
+
+let html = "";
+
+ranking.forEach((player,index)=>{
+
+html +=
+`${index+1}. ${player.playerName} - ${player.coins} monet<br>`;
+
+});
+
+document.getElementById("rankingData")
+.innerHTML = html;
+
+};
+
+backRanking.onclick = () => {
+
+document.getElementById("rankingScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+};
 
 document.getElementById("profileScreen")
 .classList.add("hidden");
