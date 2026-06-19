@@ -187,6 +187,16 @@ Odrzuć
 
 </div>
 
+  <div id="deliveryScreen" class="hidden">
+
+<h2>🚴 Dostarczanie</h2>
+
+<p id="deliveryText">
+Trwa dostawa...
+</p>
+
+</div>
+
 <button class="green" id="playButton">
 Wejdź do gry
 </button>
@@ -522,7 +532,20 @@ ${pickup} → ${delivery}
 
 acceptOrder.onclick = async () => {
 
-console.log("Przyciski zamówień załadowane");
+document.getElementById("orderScreen")
+.classList.add("hidden");
+
+document.getElementById("deliveryScreen")
+.classList.remove("hidden");
+
+const deliveryTime =
+Math.floor(Math.random() * 11) + 5;
+
+document.getElementById("deliveryText")
+.innerHTML =
+`🚴 Dostarczanie zamówienia...<br><br>${deliveryTime} s`;
+
+setTimeout(async () => {
 
 const userRef =
 doc(db,"users",currentUser.uid);
@@ -538,12 +561,14 @@ coins: data.coins + 1,
 completedOrders: data.completedOrders + 1
 });
 
-alert("Zarobiono 1 monetę!");
+alert("📦 Zamówienie dostarczone! +1 moneta");
 
 location.reload();
 
-};
+}, deliveryTime * 1000);
 
+};
+  
 rejectOrder.onclick = async () => {
 
 const userRef =
