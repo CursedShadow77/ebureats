@@ -556,12 +556,14 @@ await getDoc(userRef);
 const data =
 userDoc.data();
 
+const reward = data.completedOrders + 1;
+
 await updateDoc(userRef,{
-coins: data.coins + 1,
+coins: data.coins + reward,
 completedOrders: data.completedOrders + 1
 });
 
-alert("📦 Zamówienie dostarczone! +1 moneta");
+alert(`📦 Zamówienie dostarczone! +${reward} monet`);
 
 location.reload();
 
