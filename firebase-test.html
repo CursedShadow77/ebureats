@@ -101,7 +101,7 @@ Logowanie
 
   <div id="gameMenu" class="hidden">
 
-<button class="green">Zaczynamy</button>
+<button class="green" id="startButton">Zaczynamy</button>
 
 <button class="blue" id="profileButton">Profil</button>
 
@@ -152,6 +152,20 @@ Powrót
 </p>
 
 <button class="red" id="backShop">
+Powrót
+</button>
+
+</div>
+
+  <div id="waitingScreen" class="hidden">
+
+<h2>📦 Poczekalnia</h2>
+
+<p id="waitingText">
+Oczekiwanie na zamówienie...
+</p>
+
+<button class="red" id="cancelWaiting">
 Powrót
 </button>
 
@@ -400,6 +414,49 @@ document.getElementById("shopScreen")
 backShop.onclick = () => {
 
 document.getElementById("shopScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
+
+};
+
+  startButton.onclick = () => {
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+document.getElementById("waitingScreen")
+.classList.remove("hidden");
+
+const waitTime =
+Math.floor(Math.random() * 86 + 5);
+
+document.getElementById("waitingText")
+.innerHTML =
+`Nowe zamówienie pojawi się za około ${waitTime} sekund`;
+
+setTimeout(() => {
+
+document.getElementById("waitingText")
+.innerHTML =
+`
+📦 Nowe zamówienie!
+
+Odbiór: Dino
+
+Dostawa: Sokoła 62
+
+Nagroda: 10 monet
+`;
+
+}, waitTime * 1000);
+
+};
+
+cancelWaiting.onclick = () => {
+
+document.getElementById("waitingScreen")
 .classList.add("hidden");
 
 document.getElementById("gameMenu")
