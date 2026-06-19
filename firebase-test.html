@@ -218,6 +218,7 @@ getFirestore,
 doc,
 setDoc,
 getDoc,
+updateDoc,
 collection,
 getDocs
 }
@@ -235,6 +236,7 @@ appId:"1:219158643334:web:70d4aa86f5825674038707"
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+let currentUser = null;
 
 register.onclick = async ()=>{
 
@@ -293,6 +295,8 @@ onAuthStateChanged(auth, async user => {
 
 if(user){
 
+currentUser = user;
+  
 loginBox.classList.add("hidden");
 userBox.classList.remove("hidden");
 
@@ -516,6 +520,49 @@ ${pickup} → ${delivery}
 
 };
 
+acceptOrder.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+await updateDoc(userRef,{
+coins: data.coins + 1,
+completedOrders: data.completedOrders + 1
+});
+
+alert("Zarobiono 1 monetę!");
+
+location.reload();
+
+};
+
+rejectOrder.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+await updateDoc(userRef,{
+rejectedOrders: data.rejectedOrders + 1
+});
+
+alert("Zamówienie odrzucone");
+
+location.reload();
+
+};
+  
 cancelWaiting.onclick = () => {
 
 document.getElementById("waitingScreen")
