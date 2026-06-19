@@ -171,6 +171,22 @@ Powrót
 
 </div>
 
+  <div id="orderScreen" class="hidden">
+
+<h2>📦 Nowe zamówienie</h2>
+
+<p id="orderData"></p>
+
+<button class="green" id="acceptOrder">
+Przyjmij
+</button>
+
+<button class="red" id="rejectOrder">
+Odrzuć
+</button>
+
+</div>
+
 <button class="green" id="playButton">
 Wejdź do gry
 </button>
@@ -421,6 +437,42 @@ document.getElementById("gameMenu")
 
 };
 
+const pickupPoints = [
+"Dino",
+"Żabka",
+"Spółdzielnia Transportu Wiejskiego (STW)",
+"Plac Zabaw",
+"Słowicza 15",
+"Strusia 30",
+"Diamentowa 1",
+"Wierzbowa 32A",
+"Łochowska 38",
+"Staroszkolna 10"
+];
+
+const deliveryPoints = [
+"Sokola 62",
+"Bielika 10",
+"Jastrzębia 18",
+"Sokola 7",
+"Ptasia 23",
+"Żurawia 32",
+"Łabędzia 10",
+"Czysta 10",
+"Granitowa 4",
+"Bażancia 16",
+"Kolibra 11",
+"Drozda 13",
+"Perłowa 10",
+"Wierzbowa 9",
+"Rajska 2",
+"Wierzbowa 35A",
+"Łochowska 55",
+"Jastrzębia 46A",
+"Łochowska 3",
+"Łochowska 18"
+];
+  
   startButton.onclick = () => {
 
 document.getElementById("gameMenu")
@@ -438,17 +490,29 @@ document.getElementById("waitingText")
 
 setTimeout(() => {
 
-document.getElementById("waitingText")
+document.getElementById("waitingScreen")
+.classList.add("hidden");
+
+document.getElementById("orderScreen")
+.classList.remove("hidden");
+
+const pickup =
+pickupPoints[Math.floor(Math.random() * pickupPoints.length)];
+
+const delivery =
+deliveryPoints[Math.floor(Math.random() * deliveryPoints.length)];
+
+document.getElementById("orderData")
 .innerHTML =
 `
-📦 Nowe zamówienie!
+${pickup} → ${delivery}
 
-Odbiór: Dino
+<br><br>
 
-Dostawa: Sokoła 62
-
-Nagroda: 10 monet
+1 moneta
 `;
+
+}, waitTime * 1000);
 
 }, waitTime * 1000);
 
