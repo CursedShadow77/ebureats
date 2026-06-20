@@ -575,10 +575,15 @@ coins: data.coins + reward,
 completedOrders: data.completedOrders + 1
 });
 
-alert(`📦 Zamówienie dostarczone! +${reward} monet`);
+document.getElementById("deliveryScreen")
+.classList.add("hidden");
 
-location.reload();
+document.getElementById("deliveryCompleteScreen")
+.classList.remove("hidden");
 
+document.getElementById("deliveryReward")
+.innerHTML =
+`💰 Otrzymano ${reward} monet!`;
 }, deliveryTime * 1000);
 
 };
@@ -599,6 +604,12 @@ rejectedOrders: data.rejectedOrders + 1
 });
 
 alert("Zamówienie odrzucone");
+
+location.reload();
+
+};
+
+  backToMenu.onclick = () => {
 
 location.reload();
 
