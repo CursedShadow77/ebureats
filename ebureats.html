@@ -145,12 +145,31 @@ Powrót
 
 <h2>🛒 Sklep</h2>
 
-<p>
-💎 Premium 2 - 100 monet<br>
-💎 Premium 3 - 250 monet<br>
-🏅 Złota odznaka - 500 monet
-</p>
+<p>💎 Premium 1 - 100 monet</p>
+<button class="green" id="buyPremium1">
+Kup Premium 1
+</button>
 
+<p>💎 Premium 2 - 200 monet</p>
+<button class="green" id="buyPremium2">
+Kup Premium 2
+</button>
+
+<p>💎 Premium 3 - 300 monet</p>
+<button class="green" id="buyPremium3">
+Kup Premium 3
+</button>
+
+<p>💎 Premium 4 - 400 monet</p>
+<button class="green" id="buyPremium4">
+Kup Premium 4
+</button>
+
+<p>💎 Premium 5 - 500 monet</p>
+<button class="blue" id="buyPremium5">
+Kup Premium 5
+</button>
+    
 <button class="red" id="backShop">
 Powrót
 </button>
@@ -280,7 +299,7 @@ coins: 0,
 completedOrders: 0,
 rejectedOrders: 0,
 xpLevel: 1,
-premiumLevel: 1
+premiumLevel: 0
 }
 );
 
@@ -335,7 +354,12 @@ Konto: @${data.accountName}<br>
 Monety: ${data.coins}<br>
 Ukończone zamówienia: ${data.completedOrders}<br>
 Odrzucone zamówienia: ${data.rejectedOrders}<br>
-Poziom XP: ${data.xpLevel}<br>
+Poziom XP:
+${
+data.xpLevel === 16
+? '<span style="background:linear-gradient(90deg,gold,orange,yellow);-webkit-background-clip:text;color:transparent;font-weight:bold;">👑 MAX TIER 👑</span>'
+: data.xpLevel
+}
 Poziom Premium: ${data.premiumLevel}
 `;
   
@@ -463,6 +487,161 @@ document.getElementById("gameMenu")
 
 };
 
+buyPremium1.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+if(data.premiumLevel !== 0){
+alert("Musisz mieć Premium 0!");
+return;
+}
+
+if(data.coins < 100){
+alert("Za mało monet!");
+return;
+}
+
+await updateDoc(userRef,{
+coins: data.coins - 100,
+premiumLevel: 1
+});
+
+alert("Kupiono Premium 1!");
+location.reload();
+
+};
+
+buyPremium2.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+if(data.premiumLevel !== 1){
+alert("Musisz mieć Premium 1!");
+return;
+}
+
+if(data.coins < 200){
+alert("Za mało monet!");
+return;
+}
+
+await updateDoc(userRef,{
+coins: data.coins - 200,
+premiumLevel: 2
+});
+
+alert("Kupiono Premium 2!");
+location.reload();
+
+};
+
+buyPremium3.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+if(data.premiumLevel !== 2){
+alert("Musisz mieć Premium 2!");
+return;
+}
+
+if(data.coins < 300){
+alert("Za mało monet!");
+return;
+}
+
+await updateDoc(userRef,{
+coins: data.coins - 300,
+premiumLevel: 3
+});
+
+alert("Kupiono Premium 3!");
+location.reload();
+
+};
+
+buyPremium4.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+if(data.premiumLevel !== 3){
+alert("Musisz mieć Premium 3!");
+return;
+}
+
+if(data.coins < 400){
+alert("Za mało monet!");
+return;
+}
+
+await updateDoc(userRef,{
+coins: data.coins - 400,
+premiumLevel: 4
+});
+
+alert("Kupiono Premium 4!");
+location.reload();
+
+};
+
+buyPremium5.onclick = async () => {
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+if(data.premiumLevel !== 4){
+alert("Musisz mieć Premium 4!");
+return;
+}
+
+if(data.coins < 500){
+alert("Za mało monet!");
+return;
+}
+
+await updateDoc(userRef,{
+coins: data.coins - 500,
+premiumLevel: 5
+});
+
+alert("Kupiono Premium 5!");
+location.reload();
+
+};
+  
 const pickupPoints = [
 "Dino",
 "Żabka",
@@ -580,11 +759,74 @@ await getDoc(userRef);
 const data =
 userDoc.data();
 
-const reward = data.completedOrders + 1;
+let reward = data.completedOrders + 1;
 
+if(data.premiumLevel === 1)
+reward = Math.floor(reward * 1.1);
+
+if(data.premiumLevel === 2)
+reward = Math.floor(reward * 1.2);
+
+if(data.premiumLevel === 3)
+reward = Math.floor(reward * 1.3);
+
+if(data.premiumLevel === 4)
+reward = Math.floor(reward * 1.4);
+
+if(data.premiumLevel === 5)
+reward = Math.floor(reward * 1.5);
+
+let newLevel = 1;
+
+if(data.completedOrders + 1 >= 2)
+newLevel = 2;
+
+if(data.completedOrders + 1 >= 5)
+newLevel = 3;
+
+if(data.completedOrders + 1 >= 7)
+newLevel = 4;
+
+if(data.completedOrders + 1 >= 10)
+newLevel = 5;
+
+if(data.completedOrders + 1 >= 13)
+newLevel = 6;
+
+if(data.completedOrders + 1 >= 16)
+newLevel = 7;
+
+if(data.completedOrders + 1 >= 20)
+newLevel = 8;
+
+if(data.completedOrders + 1 >= 25)
+newLevel = 9;
+  
+if(data.completedOrders + 1 >= 30)
+newLevel = 10;
+  
+if(data.completedOrders + 1 >= 35)
+newLevel = 11;
+
+if(data.completedOrders + 1 >= 40)
+newLevel = 12;
+  
+if(data.completedOrders + 1 >= 45)
+newLevel = 13;
+
+if(data.completedOrders + 1 >= 50)
+newLevel = 14;
+
+ if(data.completedOrders + 1 >= 60)
+newLevel = 15; 
+
+if(data.completedOrders + 1 >= 75)
+newLevel = 16;
+  
 await updateDoc(userRef,{
 coins: data.coins + reward,
-completedOrders: data.completedOrders + 1
+completedOrders: data.completedOrders + 1,
+xpLevel: newLevel
 });
 
 document.getElementById("deliveryScreen")
