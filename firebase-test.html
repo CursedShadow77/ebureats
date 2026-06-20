@@ -499,7 +499,7 @@ const deliveryPoints = [
 "Łochowska 18"
 ];
   
-  startButton.onclick = () => {
+startButton.onclick = async () => {
 
 document.getElementById("gameMenu")
 .classList.add("hidden");
@@ -514,7 +514,7 @@ document.getElementById("waitingText")
 .innerHTML =
 `Nowe zamówienie pojawi się za około ${waitTime} sekund`;
 
-setTimeout(() => {
+setTimeout(async () => {
 
 document.getElementById("waitingScreen")
 .classList.add("hidden");
