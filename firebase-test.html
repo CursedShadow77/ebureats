@@ -528,6 +528,18 @@ pickupPoints[Math.floor(Math.random() * pickupPoints.length)];
 const delivery =
 deliveryPoints[Math.floor(Math.random() * deliveryPoints.length)];
 
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+const reward =
+data.completedOrders + 1;
+
 document.getElementById("orderData")
 .innerHTML =
 `
@@ -535,7 +547,7 @@ ${pickup} → ${delivery}
 
 <br><br>
 
-1 moneta
+${reward} monet
 `;
 
 }, waitTime * 1000);
