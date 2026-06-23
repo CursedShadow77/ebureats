@@ -105,6 +105,10 @@ Logowanie
 
 <button class="blue" id="profileButton">Profil</button>
 
+<button class="blue" id="achievementsButton">
+Osiągnięcia
+</button>    
+
 <button class="blue" id="rankingButton">Ranking</button>
 
 <button class="blue" id="shopButton">Sklep</button>
@@ -136,6 +140,20 @@ Powrót
 </p>
 
 <button class="red" id="backRanking">
+Powrót
+</button>
+
+</div>
+
+  <div id="achievementsScreen" class="hidden">
+
+<h2>🏆 Osiągnięcia</h2>
+
+<p id="achievementsData">
+Brak osiągnięć
+</p>
+
+<button class="red" id="backAchievements">
 Powrót
 </button>
 
@@ -299,7 +317,8 @@ coins: 0,
 completedOrders: 0,
 rejectedOrders: 0,
 xpLevel: 1,
-premiumLevel: 0
+premiumLevel: 0,
+achievements: []
 }
 );
 
@@ -639,6 +658,51 @@ premiumLevel: 5
 
 alert("Kupiono Premium 5!");
 location.reload();
+
+};
+
+achievementsButton.onclick = async () => {
+
+document.getElementById("gameMenu")
+.classList.add("hidden");
+
+document.getElementById("achievementsScreen")
+.classList.remove("hidden");
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userDoc =
+await getDoc(userRef);
+
+const data =
+userDoc.data();
+
+let achievements =
+data.achievements || [];
+
+if(achievements.length === 0){
+
+document.getElementById("achievementsData")
+.innerHTML = "Brak osiągnięć";
+
+}else{
+
+document.getElementById("achievementsData")
+.innerHTML =
+achievements.join("<br>");
+
+}
+
+};
+
+backAchievements.onclick = () => {
+
+document.getElementById("achievementsScreen")
+.classList.add("hidden");
+
+document.getElementById("gameMenu")
+.classList.remove("hidden");
 
 };
   
