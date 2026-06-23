@@ -823,6 +823,37 @@ await getDoc(userRef);
 const data =
 userDoc.data();
 
+let achievements =
+data.achievements || [];
+
+if(
+data.completedOrders + 1 >= 1 &&
+!achievements.includes("📦 Pierwsza dostawa")
+){
+achievements.push("📦 Pierwsza dostawa");
+}
+
+if(
+data.completedOrders + 1 >= 10 &&
+!achievements.includes("🚴 10 dostaw")
+){
+achievements.push("🚴 10 dostaw");
+}
+
+if(
+data.completedOrders + 1 >= 50 &&
+!achievements.includes("🔥 50 dostaw")
+){
+achievements.push("🔥 50 dostaw");
+}
+
+if(
+data.completedOrders + 1 >= 100 &&
+!achievements.includes("🌱 DOTKNIJ TRAWY!!!")
+){
+achievements.push("🌱 DOTKNIJ TRAWY!!!");
+}
+  
 let reward = data.completedOrders + 1;
 
 if(data.premiumLevel === 1)
@@ -890,7 +921,8 @@ newLevel = 16;
 await updateDoc(userRef,{
 coins: data.coins + reward,
 completedOrders: data.completedOrders + 1,
-xpLevel: newLevel
+xpLevel: newLevel,
+achievements: achievements
 });
 
 document.getElementById("deliveryScreen")
